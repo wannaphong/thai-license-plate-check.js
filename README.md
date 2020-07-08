@@ -1,0 +1,1 @@
+# thai-license-plate.js
