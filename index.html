@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Page Title</title>
+<style>
+input[type=text] {
+  font-family: 'Consolas', monospace;
+  font-size: 1.1em;
+  padding: .03em;
+  text-align: right;
+}
+
+/* insane button CSS from http://www.bestcssbuttongenerator.com/ */ 
+.myButton {
+	-moz-box-shadow: 0px 1px 0px 0px #f0f7fa;
+	-webkit-box-shadow: 0px 1px 0px 0px #f0f7fa;
+	box-shadow: 0px 1px 0px 0px #f0f7fa;
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #33bdef), color-stop(1, #019ad2));
+	background:-moz-linear-gradient(top, #33bdef 5%, #019ad2 100%);
+	background:-webkit-linear-gradient(top, #33bdef 5%, #019ad2 100%);
+	background:-o-linear-gradient(top, #33bdef 5%, #019ad2 100%);
+	background:-ms-linear-gradient(top, #33bdef 5%, #019ad2 100%);
+	background:linear-gradient(to bottom, #33bdef 5%, #019ad2 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#33bdef', endColorstr='#019ad2',GradientType=0);
+	background-color:#33bdef;
+	-moz-border-radius:6px;
+	-webkit-border-radius:6px;
+	border-radius:6px;
+	border:1px solid #057fd0;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:15px;
+	font-weight:bold;
+	padding:6px 24px;
+	text-decoration:none;
+	text-shadow:0px -1px 0px #5b6178;
+}
+.myButton:hover {
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #019ad2), color-stop(1, #33bdef));
+	background:-moz-linear-gradient(top, #019ad2 5%, #33bdef 100%);
+	background:-webkit-linear-gradient(top, #019ad2 5%, #33bdef 100%);
+	background:-o-linear-gradient(top, #019ad2 5%, #33bdef 100%);
+	background:-ms-linear-gradient(top, #019ad2 5%, #33bdef 100%);
+	background:linear-gradient(to bottom, #019ad2 5%, #33bdef 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#019ad2', endColorstr='#33bdef',GradientType=0);
+	background-color:#019ad2;
+}
+.myButton:active {
+	position:relative;
+	top:1px;
+}
+</style>
+<script src="thai-license-plate-check.js"></script>
+<script>
+// get the button and make it respond to a click
+var theButton = document.getElementById("b");
+theButton.onclick = feedTheButton;
+
+
+// this function runs each time the button is clicked
+// the simple function is called within this one 
+function countWords(str) {
+    var matches = str.match(/[ก-ฮ]/g);
+    return matches ? matches.length : 0;
+}
+function countNum(str) {
+    var matches = str.match(/\d/);
+    return matches ? matches.length : 0;
+}
+function plate_check(p){
+	var i = countWords(p);
+	var i2 = countNum(p);
+    if((i>2||i==0||p.length>7||/\s/.test(p)||i2>4||i2==0)){
+    return false;
+    }
+    return true;
+}
+
+function feedTheButton() {
+	// get the two numbers from the text input fields
+	// parseInt() changes string to number 
+  var box2 = document.getElementById("s").value;
+  // run the function above this one and store what is returned in result 
+  var result = plate_check( box2 );
+  // write the result into the HTML
+  var place = document.getElementById("write");
+  place.innerHTML = result;
+}
+
+</script>
+</head>
+<body>
+
+<p>Type a different number: <input type="text" id="s"></p>
+
+<button id="b" class="myButton">check</button>
+
+<p>The larger of the two numbers is: 
+<span id="write"></span></p>
+
+</body>
+</html> 
